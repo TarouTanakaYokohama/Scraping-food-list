@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from urllib import request
+
 import re
 import time
 
@@ -8,10 +9,10 @@ cate = '/products/chocolate/'
 response = request.urlopen(url+cate)
 soup = BeautifulSoup(response)
 
-# choco = soup.find_all('ul', attrs={'class': 'l-grid-row'})
-# url = soup.find_all('a', attrs={'class': 'l-card'})
-
 url_items = soup.select('.l-grid-row a')
 
 for a in url_items:
-    print(url+a['href'])
+    test = a['href']
+    eq = test.count('.html')
+    if(eq == 1):
+        print(url + test)
