@@ -8,13 +8,16 @@ import datetime
 # Use a service account
 cred = credentials.Certificate('umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
 firebase_admin.initialize_app(cred)
-
 db = firestore.client()
+
+# 現時刻取得
 dt_now = datetime.datetime.now()
 
+# id作成
 dat = string.digits + string.ascii_lowercase + string.ascii_uppercase
 rand = ''.join([random.choice(dat) for i in range(19)])
 
+# firestoreに追加
 doc_ref = db.collection(u'product').document(rand)
 doc_ref.set({
     u'add_date': dt_now,
