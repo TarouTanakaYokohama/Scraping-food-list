@@ -3,8 +3,10 @@ services:
   python3:
     restart: always
     build: .
-    container_name: "python3"
+    container_name: "python"
     working_dir: "/root/"
     tty: true
     volumes:
       - ./opt:/root/opt
+    environment:
+      TZ: Asia/Tokyo

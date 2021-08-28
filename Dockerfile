@@ -17,5 +17,5 @@ RUN pip install --upgrade setuptools
 RUN pip install beautifulsoup4
 RUN pip install requests
 
-RUN pip install firebase-admin
+RUN pip install --upgrade firebase-admin
 RUN pip install google-cloud-firestore
