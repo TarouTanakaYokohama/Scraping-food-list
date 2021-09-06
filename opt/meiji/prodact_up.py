@@ -9,6 +9,7 @@ from urllib import request
 import requests
 
 choco_brand_list = ['','ミルクチョコレート','明治 ザ・チョコレート','アーモンドチョコレート','マカダミアチョコレート','その他ナッツチョコレート','きのこの山','たけのこの里','きのこの山とたけのこの里','チョコレート効果','オリゴスマート','明治TANPACT','エムズバー','ガルボ','フラン','ホルン','プッカ','アグロフォレストリーミルクチョコレート','MyチョコBox','小粒チョコ','リッチチョコサンド']
+cate_last = ['','チョコレート','（準）チョコレート','チョコレート菓子','（準）チョコレート菓子','菓子詰合せ']
 
 # Use a service account
 cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
@@ -65,13 +66,15 @@ for a in url_items:
         Nutritional_ingredients_value = [x.text.replace('\n',' ') for x in Nutritional_value]
 
         # eiyou_len = len(Nutritional_ingredients_name)-4
-        
+
+        category_mix = '00' + str(cate_last.index(Nutritional_ingredients_value[0]))
+
         doc_ref = db.collection(u'product').document(rand)
         doc_ref.set({
             u'add_date': dt_now,
             # u'allergy_id': ['006'],
             u'brand_id': choco_brand_list.index(brand),
-            u'category_id': ['001','007','001'],
+            u'category_id': ['001','004',category_mix],
             u'maker_id':'1',
             u'product_id': rand,
             u'product_name': name,
