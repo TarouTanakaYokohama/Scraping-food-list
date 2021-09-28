@@ -74,14 +74,15 @@ for a in url_items:
         doc_ref = db.collection(u'product').document(rand)
         doc_ref.set({
             u'add_date': dt_now,
-            # u'allergy_id': ['006'],
+            u'allergy_id': [''],
             u'brand_id': str(choco_brand_list.index(brand)),
             u'category_id': ['001','004','00'+str(category_a)],
             u'maker_id':'02zzgbAq1OxeXVMxoEhq',
             u'product_id': rand,
             u'product_name': name,
             u'raw_material': Nutritional_ingredients_value[1],
-            u'update_date': dt_now
+            u'update_date': dt_now,
+            u'images':[""]
         })
         doc_ref.collection(u'nutritional_ingredients').document(rand).set({
             Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
