@@ -71,6 +71,10 @@ for a in url_items:
 
         category_a = int(category_mix)+1
 
+        for in b in Nutritional_ingredients_name:
+            if b != '':
+                Nutritional_null = b
+
         doc_ref = db.collection(u'product').document(rand)
         doc_ref.set({
             u'add_date': dt_now,
