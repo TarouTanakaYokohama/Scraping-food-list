@@ -7,6 +7,7 @@ import datetime
 from bs4 import BeautifulSoup
 from urllib import request
 import requests
+import re
 
 choco_brand_list = ['','ミルクチョコレート','明治 ザ・チョコレート','アーモンドチョコレート','マカダミアチョコレート','その他ナッツチョコレート','きのこの山','たけのこの里','きのこの山とたけのこの里','チョコレート効果','オリゴスマート','明治TANPACT','エムズバー','ガルボ','フラン','ホルン','プッカ','アグロフォレストリーミルクチョコレート','MyチョコBox','小粒チョコ','リッチチョコサンド']
 cate_last = ['チョコレート','（準）チョコレート','チョコレート菓子','（準）チョコレート菓子','菓子詰合せ']
@@ -65,11 +66,18 @@ for a in url_items:
         Nutritional_value = Beautiful.find_all('td')
         Nutritional_ingredients_value = [x.text.replace('\n',' ') for x in Nutritional_value]
 
+
         # eiyou_len = len(Nutritional_ingredients_name)-4
+
+
+        print(Nutritional_ingredients_value[2])
 
         category_mix = '00' + str(cate_last.index(Nutritional_ingredients_value[0]))
 
         category_a = int(category_mix)+1
+        
+        aiu = re.findall('.* ',name)
+        simple_name = "".join(map(str,aiu))
 
         for in b in Nutritional_ingredients_name:
             if b != '':
@@ -85,6 +93,7 @@ for a in url_items:
             u'product_id': rand,
             u'product_name': name,
             u'raw_material': Nutritional_ingredients_value[1],
+            u'Internal_capacity': Nutritional_ingredients_value[2],
             u'update_date': dt_now,
             u'images':[""]
         })
