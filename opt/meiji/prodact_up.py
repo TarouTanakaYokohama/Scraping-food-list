@@ -70,7 +70,7 @@ for a in url_items:
         # eiyou_len = len(Nutritional_ingredients_name)-4
 
 
-        print(Nutritional_ingredients_value[2])
+        # print(Nutritional_ingredients_value[2])
 
         category_mix = '00' + str(cate_last.index(Nutritional_ingredients_value[0]))
 
@@ -78,30 +78,35 @@ for a in url_items:
         
         aiu = re.findall('.* ',name)
         simple_name = "".join(map(str,aiu))
+        simple_name_strip = simple_name.strip()
 
-        for in b in Nutritional_ingredients_name:
-            if b != '':
-                Nutritional_null = b
+        # print(simple_name)
 
-        doc_ref = db.collection(u'product').document(rand)
-        doc_ref.set({
-            u'add_date': dt_now,
-            u'allergy_id': [''],
-            u'brand_id': str(choco_brand_list.index(brand)),
-            u'category_id': ['001','004','00'+str(category_a)],
-            u'maker_id':'02zzgbAq1OxeXVMxoEhq',
-            u'product_id': rand,
-            u'product_name': name,
-            u'raw_material': Nutritional_ingredients_value[1],
-            u'Internal_capacity': Nutritional_ingredients_value[2],
-            u'update_date': dt_now,
-            u'images':[""]
-        })
-        doc_ref.collection(u'nutritional_ingredients').document(rand).set({
-            Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
-            Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
-            Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
-            Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
-            Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
-            u'subject':Nutritional_ingredients_subject[1]
-        })
+
+
+        # for in b in Nutritional_ingredients_name:
+        #     if b != '':
+        #         Nutritional_null = b
+
+        # doc_ref = db.collection(u'product_test').document(rand)
+        # doc_ref.set({
+        #     u'add_date': dt_now,
+        #     u'allergy_id': [''],
+        #     u'brand_id': str(choco_brand_list.index(brand)),
+        #     u'category_id': ['001','004','00'+str(category_a)],
+        #     u'maker_id':'02zzgbAq1OxeXVMxoEhq',
+        #     u'product_id': rand,
+        #     u'product_name': simple_name_strip,
+        #     u'raw_material': Nutritional_ingredients_value[1],
+        #     u'Internal_capacity': Nutritional_ingredients_value[2],
+        #     u'update_date': dt_now,
+        #     u'images':[""]
+        # })
+        # doc_ref.collection(u'nutritional_ingredients').document(rand).set({
+        #     Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
+        #     Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
+        #     Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
+        #     Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
+        #     Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
+        #     u'subject':Nutritional_ingredients_subject[1]
+        # })
