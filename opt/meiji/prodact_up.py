@@ -49,6 +49,9 @@ for a in url_items:
         # 商品名
         for hit in Beautiful.find_all(attrs={'class':'m-heading1'}):
             name = hit.contents[1]
+        aiu = re.findall('.* ',name)
+        simple_name = "".join(map(str,aiu))
+        simple_name_strip = simple_name.strip()
 
         # 商品概要
         # product = Beautiful.find_all('tr')
@@ -75,10 +78,7 @@ for a in url_items:
         category_mix = '00' + str(cate_last.index(Nutritional_ingredients_value[0]))
 
         category_a = int(category_mix)+1
-        
-        aiu = re.findall('.* ',name)
-        simple_name = "".join(map(str,aiu))
-        simple_name_strip = simple_name.strip()
+
 
         # print(simple_name)
 
@@ -98,7 +98,7 @@ for a in url_items:
             u'raw_material': Nutritional_ingredients_value[1],
             u'Internal_capacity': Nutritional_ingredients_value[2],
             u'update_date': dt_now,
-            u'images':[""],
+            u'images':[''],
             u'release_date': datetime.datetime.min
         })
         doc_ref.collection(u'nutritional_ingredients').document(rand).set({
