@@ -24,7 +24,7 @@ cate = '/products/chocolate/'
 response = request.urlopen(url+cate)
 soup = BeautifulSoup(response)
 url_items = soup.select('.l-grid-row a')
-product_list =[]
+product_list = []
 
 for a in url_items:
     test = a['href']
@@ -82,31 +82,30 @@ for a in url_items:
 
         # print(simple_name)
 
-
-
         # for in b in Nutritional_ingredients_name:
         #     if b != '':
         #         Nutritional_null = b
 
-        # doc_ref = db.collection(u'product_test').document(rand)
-        # doc_ref.set({
-        #     u'add_date': dt_now,
-        #     u'allergy_id': [''],
-        #     u'brand_id': str(choco_brand_list.index(brand)),
-        #     u'category_id': ['001','004','00'+str(category_a)],
-        #     u'maker_id':'02zzgbAq1OxeXVMxoEhq',
-        #     u'product_id': rand,
-        #     u'product_name': simple_name_strip,
-        #     u'raw_material': Nutritional_ingredients_value[1],
-        #     u'Internal_capacity': Nutritional_ingredients_value[2],
-        #     u'update_date': dt_now,
-        #     u'images':[""]
-        # })
-        # doc_ref.collection(u'nutritional_ingredients').document(rand).set({
-        #     Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
-        #     Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
-        #     Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
-        #     Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
-        #     Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
-        #     u'subject':Nutritional_ingredients_subject[1]
-        # })
+        doc_ref = db.collection(u'product_test').document(rand)
+        doc_ref.set({
+            u'add_date': dt_now,
+            u'allergy_id': [''],
+            u'brand_id': str(choco_brand_list.index(brand)),
+            u'category_id': ['001','004','00'+str(category_a)],
+            u'maker_id':'02zzgbAq1OxeXVMxoEhq',
+            u'product_id': rand,
+            u'product_name': simple_name_strip,
+            u'raw_material': Nutritional_ingredients_value[1],
+            u'Internal_capacity': Nutritional_ingredients_value[2],
+            u'update_date': dt_now,
+            u'images':[""],
+            u'release_date': datetime.datetime.min
+        })
+        doc_ref.collection(u'nutritional_ingredients').document(rand).set({
+            Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
+            Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
+            Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
+            Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
+            Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
+            u'subject':Nutritional_ingredients_subject[1]
+        })
