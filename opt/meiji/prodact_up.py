@@ -99,7 +99,7 @@ for a in url_items:
             u'Internal_capacity': Nutritional_ingredients_value[2],
             u'update_date': dt_now,
             u'images':[''],
-            u'release_date': datetime.datetime.min
+            u'release_date': datetime.datetime(1,1,1,1,1,1,1)
         })
         doc_ref.collection(u'nutritional_ingredients').document(rand).set({
             Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
