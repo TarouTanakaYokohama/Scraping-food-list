@@ -9,7 +9,7 @@ from urllib import request
 import requests
 import re
 
-choco_brand_list = ['','ミルクチョコレート','明治 ザ・チョコレート','アーモンドチョコレート','マカダミアチョコレート','その他ナッツチョコレート','きのこの山','たけのこの里','きのこの山とたけのこの里','チョコレート効果','オリゴスマート','明治TANPACT','エムズバー','ガルボ','フラン','ホルン','プッカ','アグロフォレストリーミルクチョコレート','MyチョコBox','小粒チョコ','リッチチョコサンド']
+choco_brand_list = ['','ミルクチョコレート','明治 ザ・チョコレート','アーモンドチョコレート','マカダミアチョコレート','その他ナッツチョコレート','きのこの山','たけのこの里','きのこの山とたけのこの里','チョコレート効果','オリゴスマート','明治TANPACT','メルティーキッス','ガルボ','フラン','ホルン','プッカ','アグロフォレストリーミルクチョコレート','MyチョコBox','小粒チョコ','リッチチョコサンド']
 cate_last = ['チョコレート','（準）チョコレート','チョコレート菓子','（準）チョコレート菓子','菓子詰合せ']
 
 # Use a service account
@@ -86,7 +86,7 @@ for a in url_items:
         #     if b != '':
         #         Nutritional_null = b
 
-        doc_ref = db.collection(u'product_test').document(rand)
+        doc_ref = db.collection(u'product').document(rand)
         doc_ref.set({
             u'add_date': dt_now,
             u'allergy_id': [''],
