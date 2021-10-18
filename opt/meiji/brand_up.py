@@ -33,7 +33,7 @@ for i,a in enumerate(choco_brand_list):
     db = firestore.client()
     rand2 = ''.join([random.choice(dat) for i in range(19)])
     dat = string.digits + string.ascii_lowercase + string.ascii_uppercase
-    doc_ref.collection(u'brand').document(rand2).set({
+    doc_ref.collection(u'brand').document(str(i+1)).set({
         u'brand_id': str(i+1),
         u'brand_name': a
     })
