@@ -13,20 +13,27 @@ brand_count = len(choco_brand_list)+len(gumi_brand_lists)
 # for i,a in enumerate(choco_brand_list):
 #     print(i)
 
-for a in choco_brand_list:
-    if a != '':
-        print(a)
+# for a in choco_brand_list:
+#     if a != '':
+#         print(a)
 
 
 # # Use a service account
 cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
 firebase_admin.initialize_app(cred)
+db = firestore.client()
+dat = string.digits + string.ascii_lowercase + string.ascii_uppercase
+rand = ''.join([random.choice(dat) for i in range(19)])
+doc_ref = db.collection(u'maker').document('02zzgbAq1OxeXVMxoEhq')
+doc_ref.set({
+    u'maker_id': '02zzgbAq1OxeXVMxoEhq',
+    u'maker_name': '明治'
+})
 for i,a in enumerate(choco_brand_list):
     db = firestore.client()
+    rand2 = ''.join([random.choice(dat) for i in range(19)])
     dat = string.digits + string.ascii_lowercase + string.ascii_uppercase
-    rand = ''.join([random.choice(dat) for i in range(19)])
-    doc_ref = db.collection(u'brand').document(str(i+1))
-    doc_ref.set({
+    doc_ref.collection(u'brand').document(rand2).set({
         u'brand_id': str(i+1),
         u'brand_name': a
     })
