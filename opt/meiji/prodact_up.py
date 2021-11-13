@@ -9,10 +9,15 @@ from urllib import request
 import requests
 import re
 
+# n-gram関数
+def n_gram(target, n):
+  # 基準を1文字(単語)ずつ ずらしながらn文字分抜き出す
+  return [ target[idx:idx + n] for idx in range(len(target) - n + 1)]
+
 choco_brand_list = ['','ミルクチョコレート','明治 ザ・チョコレート','アーモンドチョコレート','マカダミアチョコレート','その他ナッツチョコレート','きのこの山','たけのこの里','きのこの山とたけのこの里','チョコレート効果','オリゴスマート','明治TANPACT','メルティーキッス','ガルボ','フラン','ホルン','プッカ','アグロフォレストリーミルクチョコレート','MyチョコBox','小粒チョコ','リッチチョコサンド']
 cate_last = ['チョコレート','（準）チョコレート','チョコレート菓子','（準）チョコレート菓子','菓子詰合せ']
 
-# Use a service account
+#Use a service account
 cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
 firebase_admin.initialize_app(cred)
 
@@ -32,7 +37,7 @@ for a in url_items:
     if(eq == 1):
         url_list = url + test
         product_list.append(url_list)
-
+        
         aa = requests.get(url_list)
         Beautiful = BeautifulSoup(aa.content,"html.parser")
 
@@ -79,6 +84,8 @@ for a in url_items:
 
         category_a = int(category_mix)+1
 
+        gram =n_gram(simple_name_strip,2)
+
 
         # print(simple_name)
 
@@ -86,7 +93,7 @@ for a in url_items:
         #     if b != '':
         #         Nutritional_null = b
 
-        doc_ref = db.collection(u'product').document(rand)
+        doc_ref = db.collection(u'product_test').document(rand)
         doc_ref.set({
             u'add_date': dt_now,
             u'allergy_id': [''],
@@ -99,7 +106,10 @@ for a in url_items:
             u'Internal_capacity': Nutritional_ingredients_value[2],
             u'update_date': dt_now,
             u'images':[''],
-            u'release_date': datetime.datetime(1,1,1,1,1,1,1)
+            u'release_date': datetime.datetime(1,1,1,1,1,1,1),
+            u'url':url_list,
+            u'gram':gram,
+            u'delete_flag':False
         })
         doc_ref.collection(u'nutritional_ingredients').document(rand).set({
             Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
