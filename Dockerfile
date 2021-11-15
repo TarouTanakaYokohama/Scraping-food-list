@@ -19,3 +19,4 @@ RUN pip install requests
 
 RUN pip install --upgrade firebase-admin
 RUN pip install google-cloud-firestore
+RUN pip install janome
