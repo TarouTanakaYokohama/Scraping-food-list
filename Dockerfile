@@ -20,3 +20,6 @@ RUN pip install requests
 RUN pip install --upgrade firebase-admin
 RUN pip install google-cloud-firestore
 RUN pip install janome
+
+RUN pip install -U -y ginza ja-ginza-electra
+RUN /usr/local/bin/python -m pip install --upgrade pip
