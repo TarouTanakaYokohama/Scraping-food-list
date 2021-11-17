@@ -23,11 +23,11 @@ choco_brand_list = ['','ミルクチョコレート','明治 ザ・チョコレ�
 cate_last = ['チョコレート','（準）チョコレート','チョコレート菓子','（準）チョコレート菓子','菓子詰合せ']
 
 #Use a service account
-cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
-firebase_admin.initialize_app(cred)
+# cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
+# firebase_admin.initialize_app(cred)
 
-db = firestore.client()
-dt_now = datetime.datetime.now()
+# db = firestore.client()
+# dt_now = datetime.datetime.now()
 
 url = 'https://www.meiji.co.jp'
 cate = '/products/chocolate/'
@@ -37,7 +37,7 @@ url_items = soup.select('.l-grid-row a')
 product_list = []
 
 
-nlp = spacy.load('ja_ginza_electra')  # モデルのロード
+# nlp = spacy.load('ja_ginza_electra')  # モデルのロード
 
 for a in url_items:
     test = a['href']
@@ -84,7 +84,6 @@ for a in url_items:
 
         # eiyou_len = len(Nutritional_ingredients_name)-4
 
-
         # print(Nutritional_ingredients_value[2])
 
         category_mix = '00' + str(cate_last.index(Nutritional_ingredients_value[0]))
@@ -109,7 +108,7 @@ for a in url_items:
         Morphological_analysis = []
         for sent in doc.sents:
             for token in sent:
-                if token.pos_ in ('NOUN', 'PRON', 'PROPN','VERB'):
+                if token.pos_ in ('NOUN', 'PRON', 'PROPN','VERB','ADJ'):
                     Morphological_analysis.append(token.orth_)
                 # if token.orth_ == '％' or token.orth_ == '袋':
                 if token.orth_ == '％':
@@ -126,31 +125,32 @@ for a in url_items:
         #     # print(Surface_type)
         # print(Surface_type)
 
-        doc_ref = db.collection(u'product_test3').document(rand)
-        doc_ref.set({
-            u'add_date': dt_now,
-            u'allergy_id': [''],
-            u'brand_id': str(choco_brand_list.index(brand)),
-            u'category_id': ['001','004','00'+str(category_a)],
-            u'maker_id':'02zzgbAq1OxeXVMxoEhq',
-            u'product_id': rand,
-            u'product_name': simple_name_strip,
-            u'raw_material': Nutritional_ingredients_value[1],
-            u'Internal_capacity': Nutritional_ingredients_value[2],
-            u'update_date': dt_now,
-            u'images':[''],
-            u'release_date': datetime.datetime(1,1,1,1,1,1,1),
-            u'maker_url':url_list,
-            u'delete_flag':False,
-            u'delete_date':dt_now,
-            # u'gram':gram,
-            u'Morphological_analysis':Morphological_analysis
-        })
-        doc_ref.collection(u'nutritional_ingredients').document(rand).set({
-            Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
-            Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
-            Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
-            Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
-            Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
-            u'subject':Nutritional_ingredients_subject[1]
-        })
+        # firestoreに追加
+        # doc_ref = db.collection(u'product_test3').document(rand)
+        # doc_ref.set({
+        #     u'add_date': dt_now,
+        #     u'allergy_id': [''],
+        #     u'brand_id': str(choco_brand_list.index(brand)),
+        #     u'category_id': ['001','004','00'+str(category_a)],
+        #     u'maker_id':'02zzgbAq1OxeXVMxoEhq',
+        #     u'product_id': rand,
+        #     u'product_name': simple_name_strip,
+        #     u'raw_material': Nutritional_ingredients_value[1],
+        #     u'Internal_capacity': Nutritional_ingredients_value[2],
+        #     u'update_date': dt_now,
+        #     u'images':[''],
+        #     u'release_date': datetime.datetime(1,1,1,1,1,1,1),
+        #     u'maker_url':url_list,
+        #     u'delete_flag':False,
+        #     u'delete_date':dt_now,
+        #     u'Morphological_analysis':Morphological_analysis
+        #     # u'gram':gram,
+        # })
+        # doc_ref.collection(u'nutritional_ingredients').document(rand).set({
+        #     Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
+        #     Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
+        #     Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
+        #     Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
+        #     Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
+        #     u'subject':Nutritional_ingredients_subject[1]
+        # })
