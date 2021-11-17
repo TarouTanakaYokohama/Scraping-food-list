@@ -9,11 +9,11 @@ a = []
 # i = 0
 for sent in doc.sents:
     for token in sent:
-        # if token.pos_ in ('NOUN', 'PRON', 'PROPN','VERB'):
+        if token.pos_ in ('NOUN', 'PRON', 'PROPN','VERB'):
             # a.pop()
-        Morphological_analysis.append(token.pos_)  # 表層形を出力
-        a.append(token.orth_)
-        if token.orth_ == '％' or token.orth_ == '袋':
-            a.pop()
+            Morphological_analysis.append(token.pos_)  # 表層形を出力
+            a.append(token.orth_)
+            if token.orth_ == '％' or token.orth_ == '袋':
+                a.pop()
 print(Morphological_analysis)
 print(a)
