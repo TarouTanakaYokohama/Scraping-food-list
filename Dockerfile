@@ -19,9 +19,10 @@ RUN pip install requests
 
 RUN pip install --upgrade firebase-admin
 RUN pip install google-cloud-firestore
-RUN pip install janome
+# RUN pip install janome
 
-# RUN pip install -U -y ginza ja-ginza-electra
 # RUN pip install -U ginza https://github.com/megagonlabs/ginza/releases/download/latest/ja_ginza_electra-latest-with-model.tar.gz
-# RUN /usr/local/bin/python -m pip install --upgrade pip
+# --use-feature=2020-resolver
+RUN pip install -U ginza
 RUN pip install -U ginza ja-ginza
+# RUN pip install -U ginza ja-ginza-electra
