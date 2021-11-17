@@ -38,6 +38,7 @@ product_list = []
 
 
 # nlp = spacy.load('ja_ginza_electra')  # モデルのロード
+# nlp = spacy.load('ja_ginza')  # モデルのロード
 
 for a in url_items:
     test = a['href']
