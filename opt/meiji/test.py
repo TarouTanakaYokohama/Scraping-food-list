@@ -1,8 +1,19 @@
-from janome.tokenizer import Tokenizer
+import spacy
+# import ginza
 
-s = '明治ハイミルクチョコレート CUBIE'
+nlp = spacy.load('ja_ginza')  # モデルのロード
 
-for tok in Tokenizer().tokenize(s):
-    pos = tok.part_of_speech.split(',')
-    if '名詞' in pos:
-        print(tok.surface)  # 表層形を出力
+doc = nlp("メルティーキッス フルーティー濃いちご")
+Morphological_analysis = []
+a = []
+# i = 0
+for sent in doc.sents:
+    for token in sent:
+        # if token.pos_ in ('NOUN', 'PRON', 'PROPN','VERB'):
+            # a.pop()
+        Morphological_analysis.append(token.pos_)  # 表層形を出力
+        a.append(token.orth_)
+        if token.orth_ == '％' or token.orth_ == '袋':
+            a.pop()
+print(Morphological_analysis)
+print(a)
