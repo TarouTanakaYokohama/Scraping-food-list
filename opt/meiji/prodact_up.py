@@ -10,7 +10,7 @@ from urllib import request
 import requests
 import re
 # 形態素解析
-from janome.tokenizer import Tokenizer
+# from janome.tokenizer import Tokenizer
 import spacy
 import ginza
 
@@ -26,12 +26,16 @@ choco_brand_list = ['', 'ミルクチョコレート', '明治 ザ・チョコ�
                     'チョコレート効果', 'オリゴスマート', '明治TANPACT', 'メルティーキッス', 'ガルボ', 'フラン', 'ホルン', 'プッカ', 'アグロフォレストリーミルクチョコレート', 'MyチョコBox', '小粒チョコ', 'リッチチョコサンド']
 cate_last = ['チョコレート', '（準）チョコレート', 'チョコレート菓子', '（準）チョコレート菓子', '菓子詰合せ']
 
-# Use a service account
-# cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
-# firebase_admin.initialize_app(cred)
+Allergie = ['001', '002', '003', '004', '005', '006', '007', '008', '009', '010', '011', '012',
+            '013', '014', '015', '016', '017', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027', '028']
 
-# db = firestore.client()
-# dt_now = datetime.datetime.now()
+# Use a service account
+cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
+
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+dt_now = datetime.datetime.now()
 
 url = 'https://www.meiji.co.jp'
 cate = '/products/chocolate/'
@@ -122,7 +126,67 @@ for a in url_items:
                 # if token.orth_ == '％' or token.orth_ == '袋':
                 if token.orth_ == '％':
                     Morphological_analysis.pop()
-        print(Morphological_analysis)
+        # print(Morphological_analysis)
+        # 原材料からアレルギーを取得
+        allergy_list = []
+
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("えび", "海老", "エビ"))):
+            allergy_list.append(Allergie[0])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("かに", "蟹", "カニ","ガニ"))):
+            allergy_list.append(Allergie[1])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("小麦", "こむぎ", "コムギ", "パン", "うどん"))):
+            allergy_list.append(Allergie[2])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("そば", "ソバ"))):
+            allergy_list.append(Allergie[3])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("卵白", "卵黄", "玉子", "たまご", "タマゴ", "エッグ", "鶏卵", "あひる卵", "うずら卵","マヨネーズ", "オムレツ", "目玉焼", "かに玉", "オムライス", "親子丼"))):
+            allergy_list.append(Allergie[4])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("乳", "バター", "ホエイ", "アイスクリーム", "クリームパウダー", "ミルク", "生クリーム", "ヨーグルト", "アイス"))):
+            allergy_list.append(Allergie[5])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("落花生", "ピーナッツ"))):
+            allergy_list.append(Allergie[6])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("アーモンド","あーもんど"))):
+            allergy_list.append(Allergie[7])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("あわび", "アワビ"))):
+            allergy_list.append(Allergie[8])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("いか", "イカ", "するめ", "スルメ"))):
+            allergy_list.append(Allergie[9])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("いくら", "イクラ", "すじこ", "スジコ"))):
+            allergy_list.append(Allergie[10])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("オレンジ","おれんじ"))):
+            allergy_list.append(Allergie[11])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("カシューナッツ","かしゅーなっつ"))):
+            allergy_list.append(Allergie[12])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("キウイフルーツ", "キウイ", "キウィー", "キーウィー", "キーウィ", "キウィ"))):
+            allergy_list.append(Allergie[13])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("牛", "ビーフ", "ぎゅうにく", "ぎゅう肉", "牛にく"))):
+            allergy_list.append(Allergie[14])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("くるみ", "クルミ"))):
+            allergy_list.append(Allergie[15])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("ごま",'ゴマ','胡麻'))):
+            allergy_list.append(Allergie[16])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("さけ", "鮭", "サケ", "サーモン", "しゃけ", "シャケ"))):
+            allergy_list.append(Allergie[17])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("さば", "鯖", "サバ"))):
+            allergy_list.append(Allergie[18])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("大豆", "だいず", "ダイズ", "醤油", "味噌", "豆腐", "油揚げ", "厚揚げ", "豆乳", "納豆"))):
+            allergy_list.append(Allergie[19])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏", "とり", "鳥", "チキン"))):
+            allergy_list.append(Allergie[20])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("バナナ", "ばなな"))):
+            allergy_list.append(Allergie[21])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("豚", "ぶた", "ポーク", "とんかつ", "トンカツ"))):
+            allergy_list.append(Allergie[22])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("まつたけ", "松茸", "マツタケ"))):
+            allergy_list.append(Allergie[23])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("もも", "モモ", "桃", "ピーチ"))):
+            allergy_list.append(Allergie[24])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("やまいも", "山芋", "ヤマイモ", "山いも", "とろろ", "ながいも"))):
+            allergy_list.append(Allergie[25])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("りんご", "リンゴ", "アップル"))):
+            allergy_list.append(Allergie[26])
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("ゼラチン","ぜらちん"))):
+            allergy_list.append(Allergie[27])
+
 
         # count = 0
         # for hit in Tokenizer().tokenize(simple_name):
@@ -135,31 +199,31 @@ for a in url_items:
         # print(Surface_type)
 
         # firestoreに追加
-        # doc_ref = db.collection(u'product_test3').document(rand)
-        # doc_ref.set({
-        #     u'add_date': dt_now,
-        #     u'allergy_id': [''],
-        #     u'brand_id': str(choco_brand_list.index(brand)),
-        #     u'category_id': ['001','004','00'+str(category_a)],
-        #     u'maker_id':'02zzgbAq1OxeXVMxoEhq',
-        #     u'product_id': rand,
-        #     u'product_name': simple_name_strip,
-        #     u'raw_material': Nutritional_ingredients_value[1],
-        #     u'Internal_capacity': Nutritional_ingredients_value[2],
-        #     u'update_date': dt_now,
-        #     u'images':[''],
-        #     u'release_date': datetime.datetime(1,1,1,1,1,1,1),
-        #     u'maker_url':url_list,
-        #     u'delete_flag':False,
-        #     u'delete_date':dt_now,
-        #     u'Morphological_analysis':Morphological_analysis
-        #     # u'gram':gram,
-        # })
-        # doc_ref.collection(u'nutritional_ingredients').document(rand).set({
-        #     Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
-        #     Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
-        #     Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
-        #     Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
-        #     Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
-        #     u'subject':Nutritional_ingredients_subject[1]
-        # })
+        doc_ref = db.collection(u'product_test5').document(rand)
+        doc_ref.set({
+            u'add_date': dt_now,
+            u'allergy_id': allergy_list,
+            u'brand_id': str(choco_brand_list.index(brand)),
+            u'category_id': ['001','004','00'+str(category_a)],
+            u'maker_id':'02zzgbAq1OxeXVMxoEhq',
+            u'product_id': rand,
+            u'product_name': simple_name_strip,
+            u'raw_material': Nutritional_ingredients_value[1],
+            u'Internal_capacity': Nutritional_ingredients_value[2],
+            u'update_date': dt_now,
+            u'images':[''],
+            u'release_date': datetime.datetime(1,1,1,1,1,1,1),
+            u'maker_url':url_list,
+            u'delete_flag':False,
+            u'delete_date':dt_now,
+            u'Morphological_analysis':Morphological_analysis
+            # u'gram':gram,
+        })
+        doc_ref.collection(u'nutritional_ingredients').document(rand).set({
+            Nutritional_ingredients_name[4]:Nutritional_ingredients_value[4],
+            Nutritional_ingredients_name[5]:Nutritional_ingredients_value[5],
+            Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
+            Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
+            Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
+            u'subject':Nutritional_ingredients_subject[1]
+        })
