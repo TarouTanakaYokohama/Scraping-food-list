@@ -15,14 +15,18 @@ import spacy
 import ginza
 
 # n-gram関数
+
+
 def n_gram(target, n):
-  # 基準を1文字(単語)ずつ ずらしながらn文字分抜き出す
-  return [target[idx:idx + n] for idx in range(len(target) - n + 1)]
+    # 基準を1文字(単語)ずつ ずらしながらn文字分抜き出す
+    return [target[idx:idx + n] for idx in range(len(target) - n + 1)]
 
-choco_brand_list = ['','ミルクチョコレート','明治 ザ・チョコレート','アーモンドチョコレート','マカダミアチョコレート','その他ナッツチョコレート','きのこの山','たけのこの里','きのこの山とたけのこの里','チョコレート効果','オリゴスマート','明治TANPACT','メルティーキッス','ガルボ','フラン','ホルン','プッカ','アグロフォレストリーミルクチョコレート','MyチョコBox','小粒チョコ','リッチチョコサンド']
-cate_last = ['チョコレート','（準）チョコレート','チョコレート菓子','（準）チョコレート菓子','菓子詰合せ']
 
-#Use a service account
+choco_brand_list = ['', 'ミルクチョコレート', '明治 ザ・チョコレート', 'アーモンドチョコレート', 'マカダミアチョコレート', 'その他ナッツチョコレート', 'きのこの山', 'たけのこの里', 'きのこの山とたけのこの里',
+                    'チョコレート効果', 'オリゴスマート', '明治TANPACT', 'メルティーキッス', 'ガルボ', 'フラン', 'ホルン', 'プッカ', 'アグロフォレストリーミルクチョコレート', 'MyチョコBox', '小粒チョコ', 'リッチチョコサンド']
+cate_last = ['チョコレート', '（準）チョコレート', 'チョコレート菓子', '（準）チョコレート菓子', '菓子詰合せ']
+
+# Use a service account
 # cred = credentials.Certificate('../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
 # firebase_admin.initialize_app(cred)
 
@@ -38,7 +42,7 @@ product_list = []
 
 
 # nlp = spacy.load('ja_ginza_electra')  # モデルのロード
-# nlp = spacy.load('ja_ginza')  # モデルのロード
+nlp = spacy.load('ja_ginza')  # モデルのロード
 
 for a in url_items:
     test = a['href']
@@ -46,25 +50,25 @@ for a in url_items:
     if(eq == 1):
         url_list = url + test
         product_list.append(url_list)
-        
+
         aa = requests.get(url_list)
-        Beautiful = BeautifulSoup(aa.content,"html.parser")
+        Beautiful = BeautifulSoup(aa.content, "html.parser")
 
         # id作成
         dat = string.digits + string.ascii_lowercase + string.ascii_uppercase
         rand = ''.join([random.choice(dat) for i in range(19)])
 
         # ブランド
-        for hit in Beautiful.find_all(attrs={'class':'m-heading1'}):
+        for hit in Beautiful.find_all(attrs={'class': 'm-heading1'}):
             brand = hit.contents[0].text
-        
+
         l_start = [s for s in choco_brand_list if s.startswith(brand)]
 
         # 商品名
-        for hit in Beautiful.find_all(attrs={'class':'m-heading1'}):
+        for hit in Beautiful.find_all(attrs={'class': 'm-heading1'}):
             name = hit.contents[1]
-        aiu = re.findall('.* ',name)
-        simple_name = "".join(map(str,aiu))
+        aiu = re.findall('.* ', name)
+        simple_name = "".join(map(str, aiu))
         simple_name_strip = simple_name.strip()
 
         # 商品概要
@@ -73,29 +77,33 @@ for a in url_items:
 
         # 栄養成分
         Nutritional_subject = Beautiful.find_all('h2')
-        Nutritional_ingredients_subject = [x.text.replace('\n',' ') for x in Nutritional_subject]
+        Nutritional_ingredients_subject = [
+            x.text.replace('\n', ' ') for x in Nutritional_subject]
 
         # 名前
         Nutritional_name = Beautiful.find_all('th')
-        Nutritional_ingredients_name = [x.text.replace('\n',' ') for x in Nutritional_name]
-        
+        Nutritional_ingredients_name = [
+            x.text.replace('\n', ' ') for x in Nutritional_name]
+
         # 数値
         Nutritional_value = Beautiful.find_all('td')
-        Nutritional_ingredients_value = [x.text.replace('\n',' ') for x in Nutritional_value]
+        Nutritional_ingredients_value = [
+            x.text.replace('\n', ' ') for x in Nutritional_value]
 
         # eiyou_len = len(Nutritional_ingredients_name)-4
 
         # print(Nutritional_ingredients_value[2])
 
-        category_mix = '00' + str(cate_last.index(Nutritional_ingredients_value[0]))
+        category_mix = '00' + \
+            str(cate_last.index(Nutritional_ingredients_value[0]))
 
         category_a = int(category_mix)+1
-        
+
         # 商品名の空白を削除
-        product_split = simple_name.replace(' ','')
+        product_split = simple_name.replace(' ', '')
         # 商品名を２文字ずつ区切る
         # gram = n_gram(product_split,2)
-        
+
         # print(gram)
 
         # 商品名を形態素解析
@@ -109,7 +117,7 @@ for a in url_items:
         Morphological_analysis = []
         for sent in doc.sents:
             for token in sent:
-                if token.pos_ in ('NOUN', 'PRON', 'PROPN','VERB','ADJ'):
+                if token.pos_ in ('NOUN', 'PRON', 'PROPN', 'VERB', 'ADJ'):
                     Morphological_analysis.append(token.orth_)
                 # if token.orth_ == '％' or token.orth_ == '袋':
                 if token.orth_ == '％':
