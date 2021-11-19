@@ -53,10 +53,84 @@ Allergie = ['001', '002', '003', '004', '005', '006', '007', '008', '009', '010'
 
 a = []
 # print(x)
-Shrimp = "小麦" in Nutritional_ingredients_value[1]
+Shrimp = "えび" in Nutritional_ingredients_value[1]
+Crab = "かに" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "そば" in Nutritional_ingredients_value[1]
+Wheat = "卵" in Nutritional_ingredients_value[1]
+Wheat = "乳" in Nutritional_ingredients_value[1]
+Wheat = "落花生" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+Wheat = "小麦" in Nutritional_ingredients_value[1]
+
+if Shrimp == True:
+    a.append(Allergie[0])
+if Crab == True:
+    a.append(Allergie[1])
+if Wheat == True:
+    a.append(Allergie[2])
 if Shrimp == True:
     a.append(Allergie[3])
-else:
-    a.append(Allergie[1])
+if Shrimp == True:
+    a.append(Allergie[4])
+if Shrimp == True:
+    a.append(Allergie[5])
+if Shrimp == True:
+    a.append(Allergie[6])
+if Shrimp == True:
+    a.append(Allergie[7])
+if Shrimp == True:
+    a.append(Allergie[8])
+if Shrimp == True:
+    a.append(Allergie[9])
+if Shrimp == True:
+    a.append(Allergie[10])
+if Shrimp == True:
+    a.append(Allergie[11])
+if Shrimp == True:
+    a.append(Allergie[12])
+if Shrimp == True:
+    a.append(Allergie[13])
+if Shrimp == True:
+    a.append(Allergie[14])
+if Shrimp == True:
+    a.append(Allergie[15])
+if Shrimp == True:
+    a.append(Allergie[16])
+if Shrimp == True:
+    a.append(Allergie[17])
+if Shrimp == True:
+    a.append(Allergie[18])
+if Shrimp == True:
+    a.append(Allergie[19])
+if Shrimp == True:
+    a.append(Allergie[20])
+if Shrimp == True:
+    a.append(Allergie[21])
+if Shrimp == True:
+    a.append(Allergie[22])
+if Shrimp == True:
+    a.append(Allergie[23])
+if Shrimp == True:
+    a.append(Allergie[24])
+if Shrimp == True:
+    a.append(Allergie[25])
+if Shrimp == True:
+    a.append(Allergie[26])
+if Shrimp == True:
+    a.append(Allergie[27])
+
 print(a)
 # print(Allergie)
