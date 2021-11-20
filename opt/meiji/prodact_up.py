@@ -134,7 +134,7 @@ for a in url_items:
 
         if any(map(Nutritional_ingredients_value[1].__contains__, ("えび", "海老", "エビ"))):
             allergy_list.append(Allergie[0])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("かに", "蟹", "カニ","ガニ"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("かに", "蟹", "カニ","ガニ","がに"))):
             allergy_list.append(Allergie[1])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("小麦", "こむぎ", "コムギ", "パン", "うどん",'デュラムセモリナ'))):
             allergy_list.append(Allergie[2])
@@ -142,7 +142,7 @@ for a in url_items:
             allergy_list.append(Allergie[3])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("卵白", "卵黄", "玉子", "たまご", "タマゴ", "エッグ", "鶏卵", "あひる卵", "うずら卵","マヨネーズ", "オムレツ", "目玉焼", "かに玉", "オムライス", "親子丼",'卵殻カルシウム'))):
             allergy_list.append(Allergie[4])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("生乳","牛乳","特別牛乳","成分調整牛乳""低脂肪牛乳","無脂肪牛乳","加工乳","乳製品","バター","バターオイル","チーズ","濃縮ホエイ","アイスクリーム","濃縮乳","脱脂濃縮乳","無糖れん乳","無糖練乳","無糖脱脂れん乳","無糖脱脂練乳","加糖れん乳","加糖練乳","加糖脱脂れん乳","加糖脱脂練乳","全粉乳","脱脂粉乳","たんぱく質濃縮","バターミルクパウダー","加糖粉乳","調製粉乳","発酵乳","はっ酵乳","乳酸菌飲料","乳飲料","カゼイン"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("生乳","牛乳","特別牛乳","成分調整牛乳""低脂肪牛乳","無脂肪牛乳","加工乳","乳製品","バター","バターオイル","チーズ","濃縮ホエイ","アイスクリーム","濃縮乳","脱脂濃縮乳","無糖れん乳","無糖練乳","無糖脱脂れん乳","無糖脱脂練乳","加糖れん乳","加糖練乳","加糖脱脂れん乳","加糖脱脂練乳","全粉乳","脱脂粉乳","たんぱく質濃縮","バターミルクパウダー","加糖粉乳","調製粉乳","発酵乳","はっ酵乳","乳酸菌飲料","乳飲料","カゼイン","生クリーム","ヨーグルト","アイスミルク","ラクトアイス","ミルク"))):
             allergy_list.append(Allergie[5])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("落花生", "ピーナッツ"))):
             allergy_list.append(Allergie[6])
