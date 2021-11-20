@@ -88,7 +88,9 @@ for a in url_items:
         Nutritional_name = Beautiful.find_all('th')
         Nutritional_ingredients_name = [
             x.text.replace('\n', ' ') for x in Nutritional_name]
+        Nutritional_ingredients_name_count = len(Nutritional_ingredients_name)
 
+        
         # 数値
         Nutritional_value = Beautiful.find_all('td')
         Nutritional_ingredients_value = [
@@ -134,13 +136,13 @@ for a in url_items:
             allergy_list.append(Allergie[0])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("かに", "蟹", "カニ","ガニ"))):
             allergy_list.append(Allergie[1])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("小麦", "こむぎ", "コムギ", "パン", "うどん"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("小麦", "こむぎ", "コムギ", "パン", "うどん",'デュラムセモリナ'))):
             allergy_list.append(Allergie[2])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("そば", "ソバ"))):
             allergy_list.append(Allergie[3])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("卵白", "卵黄", "玉子", "たまご", "タマゴ", "エッグ", "鶏卵", "あひる卵", "うずら卵","マヨネーズ", "オムレツ", "目玉焼", "かに玉", "オムライス", "親子丼"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("卵白", "卵黄", "玉子", "たまご", "タマゴ", "エッグ", "鶏卵", "あひる卵", "うずら卵","マヨネーズ", "オムレツ", "目玉焼", "かに玉", "オムライス", "親子丼",'卵殻カルシウム'))):
             allergy_list.append(Allergie[4])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("乳", "バター", "ホエイ", "アイスクリーム", "クリームパウダー", "ミルク", "生クリーム", "ヨーグルト", "アイス"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("生乳","牛乳","特別牛乳","成分調整牛乳""低脂肪牛乳","無脂肪牛乳","加工乳","乳製品","バター","バターオイル","チーズ","濃縮ホエイ","アイスクリーム","濃縮乳","脱脂濃縮乳","無糖れん乳","無糖練乳","無糖脱脂れん乳","無糖脱脂練乳","加糖れん乳","加糖練乳","加糖脱脂れん乳","加糖脱脂練乳","全粉乳","脱脂粉乳","たんぱく質濃縮","バターミルクパウダー","加糖粉乳","調製粉乳","発酵乳","はっ酵乳","乳酸菌飲料","乳飲料","カゼイン"))):
             allergy_list.append(Allergie[5])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("落花生", "ピーナッツ"))):
             allergy_list.append(Allergie[6])
@@ -168,7 +170,7 @@ for a in url_items:
             allergy_list.append(Allergie[17])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("さば", "鯖", "サバ"))):
             allergy_list.append(Allergie[18])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("大豆", "だいず", "ダイズ", "醤油", "味噌", "豆腐", "油揚げ", "厚揚げ", "豆乳", "納豆"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("大豆", "だいず", "ダイズ", "醤油", "味噌", "豆腐", "油揚げ", "厚揚げ", "豆乳", "納豆",'レシチン'))):
             allergy_list.append(Allergie[19])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏", "とり", "鳥", "チキン"))):
             allergy_list.append(Allergie[20])
@@ -187,7 +189,11 @@ for a in url_items:
         if any(map(Nutritional_ingredients_value[1].__contains__, ("ゼラチン","ぜらちん"))):
             allergy_list.append(Allergie[27])
 
-
+        # for ike in range(Nutritional_ingredients_name_count):
+        #     data = {
+        #         Nutritional_ingredients_name[ike]:Nutritional_ingredients_value[ike]
+        #     }
+        # print(data)
         # count = 0
         # for hit in Tokenizer().tokenize(simple_name):
         #     pos = hit.part_of_speech.split(',')
@@ -199,7 +205,7 @@ for a in url_items:
         # print(Surface_type)
 
         # firestoreに追加
-        doc_ref = db.collection(u'product_test5').document(rand)
+        doc_ref = db.collection(u'product_test10').document(rand)
         doc_ref.set({
             u'add_date': dt_now,
             u'allergy_id': allergy_list,
@@ -225,5 +231,12 @@ for a in url_items:
             Nutritional_ingredients_name[6]:Nutritional_ingredients_value[6],
             Nutritional_ingredients_name[7]:Nutritional_ingredients_value[7],
             Nutritional_ingredients_name[8]:Nutritional_ingredients_value[8],
+            Nutritional_ingredients_name[9]:Nutritional_ingredients_value[9],
+            Nutritional_ingredients_name[10]:Nutritional_ingredients_value[10],
+            Nutritional_ingredients_name[11]:Nutritional_ingredients_value[11],
+            Nutritional_ingredients_name[12]:Nutritional_ingredients_value[12],
+            Nutritional_ingredients_name[13]:Nutritional_ingredients_value[13],
+            Nutritional_ingredients_name[14]:Nutritional_ingredients_value[14],
+            Nutritional_ingredients_name[15]:Nutritional_ingredients_value[15],
             u'subject':Nutritional_ingredients_subject[1]
-        })
+        },merge=True)
