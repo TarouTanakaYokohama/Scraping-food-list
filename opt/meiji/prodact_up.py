@@ -81,6 +81,13 @@ for a in url_items:
         Nutritional_subject = Beautiful.find_all('h2')
         Nutritional_ingredients_subject = [
             x.text.replace('\n', ' ') for x in Nutritional_subject]
+        
+        Nutritional_ingredients_subject_list = []
+        for i,s in enumerate(Nutritional_ingredients_subject[1].split()):
+            if i != 0:
+                Nutritional_ingredients_subject_list.append(s)
+        Nutritional_ingredients_subject_text = (' '.join(Nutritional_ingredients_subject_list))
+
 
         # 名前
         Nutritional_name = Beautiful.find_all('th')
@@ -206,7 +213,7 @@ for a in url_items:
         # print(Surface_type)
 
         # firestoreに追加
-        doc_ref = db.collection(u'product').document(rand)
+        doc_ref = db.collection(u'product2').document(rand)
         doc_ref.set({
             u'add_date': dt_now,
             u'allergy_id': allergy_list,
@@ -228,5 +235,5 @@ for a in url_items:
         })
         doc_ref.collection(u'nutritional_ingredients').document(rand).set({
             u'Nutritional_ingredients':Nutritional_ingredients_dick,
-            u'subject':Nutritional_ingredients_subject[1]
+            u'subject':Nutritional_ingredients_subject_text
         })
