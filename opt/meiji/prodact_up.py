@@ -182,6 +182,8 @@ for a in url_items:
             allergy_list.append(Allergie[19])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏", "とり", "鳥", "チキン"))):
             allergy_list.append(Allergie[20])
+            if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏卵"))):
+                allergy_list.pop()
         if any(map(Nutritional_ingredients_value[1].__contains__, ("バナナ", "ばなな"))):
             allergy_list.append(Allergie[21])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("豚", "ぶた", "ポーク", "とんかつ", "トンカツ"))):
