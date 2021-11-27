@@ -99,6 +99,14 @@ for a in url_items:
         Nutritional_name = Beautiful.find_all('th')
         Nutritional_value = Beautiful.find_all('td')
 
+        num = 0
+
+        Nutritional_ingredients_name = [
+            x.text.replace('\n', ' ') for x in Nutritional_name]
+
+        for Nutritional_ingredients_count in range(len(Nutritional_ingredients_name)):
+            print("")
+
         for i, s in enumerate(Nutritional_name):
             # 名前
             Nutritional_ingredients_name = [
@@ -118,21 +126,12 @@ for a in url_items:
                 Nutritional_value_list.append(Nutritional_ingredients_value[i])
 
             if Nutritional_ingredients_name[i] in "エネルギー":
-                Nutritional_ingredients_dick |= {
-                    Nutritional_ingredients_name[i]: Nutritional_ingredients_value[i]}
-        print(Nutritional_ingredients_dick)
+                num = i
 
-        # for i in range(len(Nutritional_ingredients_name)-4):
-        #     if Nutritional_ingredients_name in "エネルギー":
-        #         Nutritional_ingredients_dick |= {
-        #             Nutritional_ingredients_name[i+4]: Nutritional_ingredients_value[i+4]}
-        # print(Nutritional_ingredients_dick)
-
-        # Nutritional_ingredients_name_count = len(Nutritional_ingredients_name)
-
-        # eiyou_len = len(Nutritional_ingredients_name)-4
-
-        # print(Nutritional_ingredients_value[2])
+        # 栄養成分の処理
+        for i in enumerate(range(len(Nutritional_name)-num)):
+            Nutritional_ingredients_dick |= {
+                Nutritional_ingredients_name[num+i[0]]: Nutritional_ingredients_value[num+i[0]]}
 
         category_mix = '00' + \
             str(cate_last.index(Nutritional_value_list[0]))
