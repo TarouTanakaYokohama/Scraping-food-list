@@ -105,7 +105,7 @@ for a in url_items:
             x.text.replace('\n', ' ') for x in Nutritional_name]
 
         for Nutritional_ingredients_count in range(len(Nutritional_ingredients_name)):
-            print("")
+            True
 
         for i, s in enumerate(Nutritional_name):
             # 名前
@@ -124,7 +124,6 @@ for a in url_items:
             if Nutritional_ingredients_name[i] in "内容量":
                 Nutritional_name_list.append(Nutritional_ingredients_name[i])
                 Nutritional_value_list.append(Nutritional_ingredients_value[i])
-
             if Nutritional_ingredients_name[i] in "エネルギー":
                 num = i
 
@@ -152,14 +151,21 @@ for a in url_items:
         # ginzaバージョン
         doc = nlp(product_split)
         Morphological_analysis = []
+
         for sent in doc.sents:
-            for token in sent:
+            for i, token in enumerate(sent):
                 if token.pos_ in ('NOUN', 'PRON', 'PROPN', 'VERB', 'ADJ'):
                     Morphological_analysis.append(token.orth_)
                 # if token.orth_ == '％' or token.orth_ == '袋':
                 if token.orth_ == '％':
                     Morphological_analysis.pop()
-        # print(Morphological_analysis)
+        for i in range(len(Morphological_analysis)):
+            Morphological_analysis.append(
+                Morphological_analysis[i]+Morphological_analysis[i+1])
+
+        Morphological_analysis.pop()
+        Morphological_analysis.append(simple_name_strip)
+        print(Morphological_analysis)
 
         # 原材料からアレルギーを取得
         allergy_list = []
