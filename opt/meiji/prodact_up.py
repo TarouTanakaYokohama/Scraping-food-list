@@ -37,7 +37,6 @@ for i in range(28):
 # Use a service account
 # cred = credentials.Certificate(
 #     '../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
-
 # firebase_admin.initialize_app(cred)
 
 # db = firestore.client()
@@ -162,8 +161,7 @@ for a in url_items:
                 if token.pos_ in ('NOUN', 'PRON', 'PROPN', 'VERB', 'ADJ'):
                     Morphological_analysis.append(token.orth_)
                 # if token.orth_ == '％' or token.orth_ == '袋':
-                if token.orth_ == '％':
-                    Morphological_analysis.pop()
+                #     Morphological_analysis.pop()
         for i in range(len(Morphological_analysis)):
             Morphological_analysis.append(
                 Morphological_analysis[i]+Morphological_analysis[i+1])
@@ -171,6 +169,7 @@ for a in url_items:
         Morphological_analysis.pop()
         Morphological_analysis.append(simple_name_strip)
         print(Morphological_analysis)
+        # print(len(Morphological_analysis))
 
         # 原材料からアレルギーを取得
         allergy_list = []
@@ -179,21 +178,27 @@ for a in url_items:
             allergy_list.append(Allergie[0])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("かに", "蟹", "カニ", "ガニ", "がに"))):
             allergy_list.append(Allergie[1])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("小麦", "こむぎ", "コムギ", "パン", "うどん", 'デュラムセモリナ'))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("小麦", "こむぎ", "コムギ"))):
             allergy_list.append(Allergie[2])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("そば", "ソバ"))):
             allergy_list.append(Allergie[3])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("卵白", "卵黄", "玉子", "たまご", "タマゴ", "エッグ", "鶏卵", "あひる卵", "うずら卵", "マヨネーズ", "オムレツ", "目玉焼", "かに玉", "オムライス", "親子丼", '卵殻カルシウム'))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("卵","玉子","たまご","タマゴ","エッグ","鶏卵","あひる卵","うずら卵"))):
             allergy_list.append(Allergie[4])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("生乳", "牛乳", "特別牛乳", "成分調整牛乳""低脂肪牛乳", "無脂肪牛乳", "加工乳", "乳製品", "バター", "バターオイル", "チーズ", "濃縮ホエイ", "アイスクリーム", "濃縮乳", "脱脂濃縮乳", "無糖れん乳", "無糖練乳", "無糖脱脂れん乳", "無糖脱脂練乳", "加糖れん乳", "加糖練乳", "加糖脱脂れん乳", "加糖脱脂練乳", "全粉乳", "脱脂粉乳", "たんぱく質濃縮", "バターミルクパウダー", "加糖粉乳", "調製粉乳", "発酵乳", "はっ酵乳", "乳酸菌飲料", "乳飲料", "カゼイン", "生クリーム", "ヨーグルト", "アイスミルク", "ラクトアイス", "ミルク", "乳成分"))):
+            if any(map(Nutritional_ingredients_value[1].__contains__, ("魚卵","爬虫類卵","昆虫卵"))):
+                allergy_list.pop()
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("乳","ミルク","バター","バターオイル","チーズ","アイスクリーム"))):
             allergy_list.append(Allergie[5])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("落花生", "ピーナッツ"))):
+            if any(map(Nutritional_ingredients_value[1].__contains__, ("乳化","乳化剤","乳酸","乳酸菌","生山羊乳","生めん羊乳","殺菌山羊乳"))):
+                allergy_list.pop()
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("落花生", "ピーナッツ","なんきんまめ"))):
             allergy_list.append(Allergie[6])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("アーモンド", "あーもんど"))):
             allergy_list.append(Allergie[7])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("あわび", "アワビ"))):
             allergy_list.append(Allergie[8])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("いか", "イカ", "するめ", "スルメ"))):
+            if any(map(Nutritional_ingredients_value[1].__contains__, ("チリアワビ","ちりあわび"))):
+                allergy_list.pop()
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("いか", "イカ"))):
             allergy_list.append(Allergie[9])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("いくら", "イクラ", "すじこ", "スジコ"))):
             allergy_list.append(Allergie[10])
@@ -203,31 +208,33 @@ for a in url_items:
             allergy_list.append(Allergie[12])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("キウイフルーツ", "キウイ", "キウィー", "キーウィー", "キーウィ", "キウィ"))):
             allergy_list.append(Allergie[13])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("牛", "ビーフ", "ぎゅうにく", "ぎゅう肉", "牛にく"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("牛肉","牛", "ビーフ", "ぎゅうにく", "ぎゅう肉", "牛にく","ラード","ヘッド"))):
             allergy_list.append(Allergie[14])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("くるみ", "クルミ"))):
             allergy_list.append(Allergie[15])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("ごま", 'ゴマ', '胡麻'))):
             allergy_list.append(Allergie[16])
+            if any(map(Nutritional_ingredients_value[1].__contains__, ("トウゴマ","唐胡麻","エゴマ","荏胡麻"))):
+                allergy_list.pop()
         if any(map(Nutritional_ingredients_value[1].__contains__, ("さけ", "鮭", "サケ", "サーモン", "しゃけ", "シャケ"))):
             allergy_list.append(Allergie[17])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("さば", "鯖", "サバ"))):
             allergy_list.append(Allergie[18])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("大豆", "だいず", "ダイズ", "醤油", "味噌", "豆腐", "油揚げ", "厚揚げ", "豆乳", "納豆", 'レシチン'))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("大豆", "だいず", "ダイズ","枝豆"))):
             allergy_list.append(Allergie[19])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏", "とり", "鳥", "チキン"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏肉","とりにく","とり肉","鳥肉","鶏","鳥","とり","チキン","どり","ドリ"))):
             allergy_list.append(Allergie[20])
-            if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏卵"))):
+            if any(map(Nutritional_ingredients_value[1].__contains__, ("鶏卵","けいらん"))):
                 allergy_list.pop()
         if any(map(Nutritional_ingredients_value[1].__contains__, ("バナナ", "ばなな"))):
             allergy_list.append(Allergie[21])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("豚", "ぶた", "ポーク", "とんかつ", "トンカツ"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("豚肉","ぶたにく","豚にく","ぶた肉","豚","ポーク"))):
             allergy_list.append(Allergie[22])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("まつたけ", "松茸", "マツタケ"))):
             allergy_list.append(Allergie[23])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("もも", "モモ", "桃", "ピーチ"))):
             allergy_list.append(Allergie[24])
-        if any(map(Nutritional_ingredients_value[1].__contains__, ("やまいも", "山芋", "ヤマイモ", "山いも", "とろろ", "ながいも"))):
+        if any(map(Nutritional_ingredients_value[1].__contains__, ("やまいも", "山芋", "ヤマイモ", "山いも"))):
             allergy_list.append(Allergie[25])
         if any(map(Nutritional_ingredients_value[1].__contains__, ("りんご", "リンゴ", "アップル"))):
             allergy_list.append(Allergie[26])
@@ -250,7 +257,7 @@ for a in url_items:
         # print(Surface_type)
 
         # firestoreに追加
-        # doc_ref = db.collection(u'product3').document(rand)
+        # doc_ref = db.collection(u'product2').document(rand)
         # doc_ref.set({
         #     u'add_date': dt_now,
         #     u'allergy_id': allergy_list,
