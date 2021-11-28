@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 from urllib import request
 import requests
 import re
+import time
 # 形態素解析
 # from janome.tokenizer import Tokenizer
 import spacy
@@ -35,12 +36,12 @@ for i in range(28):
         Allergie.append('0'+str(i))
 
 # Use a service account
-# cred = credentials.Certificate(
-#     '../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
-# firebase_admin.initialize_app(cred)
+cred = credentials.Certificate(
+    '../umyfoods-rac-firebase-adminsdk-m6vos-476571680f.json')
+firebase_admin.initialize_app(cred)
 
-# db = firestore.client()
-# dt_now = datetime.datetime.now()
+db = firestore.client()
+dt_now = datetime.datetime.now()
 
 url = 'https://www.meiji.co.jp'
 cate = '/products/chocolate/'
@@ -57,6 +58,7 @@ for a in url_items:
     test = a['href']
     eq = test.count('.html')
     if(eq == 1):
+        time.sleep(2)
         url_list = url + test
         product_list.append(url_list)
 
@@ -158,15 +160,17 @@ for a in url_items:
 
         for sent in doc.sents:
             for i, token in enumerate(sent):
-                if token.pos_ in ('NOUN', 'PRON', 'PROPN', 'VERB', 'ADJ'):
+                # if token.pos_ in ('NOUN', 'PRON', 'PROPN', 'VERB', 'ADJ'):
                     Morphological_analysis.append(token.orth_)
                 # if token.orth_ == '％' or token.orth_ == '袋':
                 #     Morphological_analysis.pop()
-        for i in range(len(Morphological_analysis)):
-            Morphological_analysis.append(
-                Morphological_analysis[i]+Morphological_analysis[i+1])
-
-        Morphological_analysis.pop()
+        if len(Morphological_analysis) != 1 and len(Morphological_analysis) != 0:
+            for i in range(len(Morphological_analysis)):
+                Morphological_analysis.append(
+                    Morphological_analysis[i]+Morphological_analysis[i+1])
+            Morphological_analysis.pop()
+        if len(Morphological_analysis) == 1:
+            Morphological_analysis.pop()
         Morphological_analysis.append(simple_name_strip)
         print(Morphological_analysis)
         # print(len(Morphological_analysis))
@@ -257,7 +261,7 @@ for a in url_items:
         # print(Surface_type)
 
         # firestoreに追加
-        # doc_ref = db.collection(u'product2').document(rand)
+        # doc_ref = db.collection(u'product3').document(rand)
         # doc_ref.set({
         #     u'add_date': dt_now,
         #     u'allergy_id': allergy_list,
