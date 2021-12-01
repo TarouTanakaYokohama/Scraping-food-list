@@ -28,6 +28,7 @@ choco_brand_list = ['', 'ミルクチョコレート', '明治 ザ・チョコ�
 cate_last = ['チョコレート', '（準）チョコレート', 'チョコレート菓子', '（準）チョコレート菓子', '菓子詰合せ']
 
 Allergie = []
+
 for i in range(28):
     i +=1
     if i <10:
@@ -50,7 +51,6 @@ soup = BeautifulSoup(response)
 url_items = soup.select('.l-grid-row a')
 product_list = []
 
-
 # nlp = spacy.load('ja_ginza_electra')  # モデルのロード
 nlp = spacy.load('ja_ginza')  # モデルのロード
 
@@ -58,7 +58,7 @@ for a in url_items:
     test = a['href']
     eq = test.count('.html')
     if(eq == 1):
-        time.sleep(2)
+        time.sleep(1)
         url_list = url + test
         product_list.append(url_list)
 
@@ -261,27 +261,27 @@ for a in url_items:
         # print(Surface_type)
 
         # firestoreに追加
-        # doc_ref = db.collection(u'product3').document(rand)
-        # doc_ref.set({
-        #     u'add_date': dt_now,
-        #     u'allergy_id': allergy_list,
-        #     u'brand_id': str(choco_brand_list.index(brand)),
-        #     u'category_id': ['001', '004', '00'+str(category_a)],
-        #     u'maker_id': '02zzgbAq1OxeXVMxoEhq',
-        #     u'product_id': rand,
-        #     u'product_name': simple_name_strip,
-        #     u'raw_material': Nutritional_value_list[1],
-        #     u'Internal_capacity': Nutritional_value_list[2],
-        #     u'update_date': dt_now,
-        #     u'images': [''],
-        #     u'release_date': datetime.datetime(1, 1, 1, 1, 1, 1, 1),
-        #     u'maker_url': url_list,
-        #     u'delete_flag': False,
-        #     u'delete_date': dt_now,
-        #     u'Morphological_analysis': Morphological_analysis
-        #     # u'gram':gram,
-        # })
-        # doc_ref.collection(u'nutritional_ingredients').document(rand).set({
-        #     u'Nutritional_ingredients': Nutritional_ingredients_dick,
-        #     u'subject': Nutritional_ingredients_subject_text
-        # })
+        doc_ref = db.collection(u'product2').document(rand)
+        doc_ref.set({
+            u'add_date': dt_now,
+            u'allergy_id': allergy_list,
+            u'brand_id': str(choco_brand_list.index(brand)),
+            u'category_id': ['001', '004', '00'+str(category_a)],
+            u'maker_id': '02zzgbAq1OxeXVMxoEhq',
+            u'product_id': rand,
+            u'product_name': simple_name_strip,
+            u'raw_material': Nutritional_value_list[1],
+            u'Internal_capacity': Nutritional_value_list[2],
+            u'update_date': dt_now,
+            u'images': [''],
+            u'release_date': datetime.datetime(1, 1, 1, 1, 1, 1, 1),
+            u'maker_url': url_list,
+            u'delete_flag': False,
+            u'delete_date': dt_now,
+            u'Morphological_analysis': Morphological_analysis
+            # u'gram':gram,
+        })
+        doc_ref.collection(u'nutritional_ingredients').document(rand).set({
+            u'Nutritional_ingredients': Nutritional_ingredients_dick,
+            u'subject': Nutritional_ingredients_subject_text
+        })
