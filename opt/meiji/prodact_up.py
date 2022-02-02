@@ -192,7 +192,7 @@ for a in url_items:
                 allergy_list.pop()
         if any(map(Nutritional_ingredients_value[1].__contains__, ("乳","ミルク","バター","バターオイル","チーズ","アイスクリーム"))):
             allergy_list.append(Allergie[5])
-            if any(map(Nutritional_ingredients_value[1].__contains__, ("乳化","乳化剤","乳酸","乳酸菌","生山羊乳","生めん羊乳","殺菌山羊乳"))):
+            if any(map(Nutritional_ingredients_value[1].__contains__, ("乳酸","乳酸菌","生山羊乳","生めん羊乳","殺菌山羊乳"))):
                 allergy_list.pop()
         if any(map(Nutritional_ingredients_value[1].__contains__, ("落花生", "ピーナッツ","なんきんまめ"))):
             allergy_list.append(Allergie[6])
